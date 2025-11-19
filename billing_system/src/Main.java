@@ -5,9 +5,10 @@ import utilities.PersistenceManager;
 
 
 public class Main{
-    public static void main(String[] args) {
+    public static void main(String[] args){
 
-            BillingSystem system = PersistenceManager.loadSystem();
+            BillingSystem system = new BillingSystem();
+            PersistenceManager.loadSystem(system);
             boolean bucle = true;
             String user_action;
             Scanner sc = new Scanner(System.in);
@@ -41,7 +42,7 @@ public class Main{
 
                             switch (user_action) {
                                 case "1":
-                                    //Aqui va el codigo para añadir un cliente
+                                    system.agregarCliente();
                                     bucle = false;
                                     break;
                                 case "2":

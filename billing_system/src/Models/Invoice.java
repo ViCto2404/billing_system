@@ -2,7 +2,7 @@ package Models;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-public class invoice implements Serializable{
+public class Invoice implements Serializable{
 
     private String id;
     private String fecha;
@@ -11,7 +11,7 @@ public class invoice implements Serializable{
     private double total;
     private String state;
 
-    public invoice(String id, String fecha, Client client){
+    public Invoice(String id, String fecha, Client client){
 
         this.id = id;
         this.fecha = fecha;
