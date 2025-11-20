@@ -19,8 +19,7 @@ public class BillingSystem implements Serializable{
     private int productsCounter = 1;
     private int invoicesCounter = 1;
 
-    public void agregarCliente(){
-
+    public void addClient(){
         System.out.println("*********************************************************************");
         String id = "CLI-" +customerCounter;
         customerCounter++;
@@ -33,8 +32,34 @@ public class BillingSystem implements Serializable{
         Client client = new Client(id, name, adress, email);
 
         clients.put(client.getId(), client);
-
+        System.out.println("Cliente agregado exitosamente");
+        System.out.println("*********************************************************************");
     }
 
+    public void addProduct(){
+        System.out.println("*********************************************************************");
+        String id = "PRO-" +productsCounter;
+        productsCounter++;
+
+        System.out.println(">> Se ha generado el ID: " + id);
+
+        String name = Console.readString("Nombre del producto: ");
+        String description = Console.readString("Descripcion del producto: ");
+        double precio = Console.readDouble("Precio del producto: ");
+        int Stock = Console.readInt("Stock inicial del producto: ");
+
+        Product p = new Product(id, name, description, precio, Stock);
+        products.put(p.getId(), p);
+
+        System.out.println("Producto agregado exitosamente");
+    }
+
+    public void showCustomerCatalog(){
+        System.out.println("------Clientes disponibles------");
+        System.out.println("  ID  "+ "     NOMBRE ");
+        for(Client c: clients.values()){
+            System.out.println("  " + c.getId() + "   " + c.getName() + " ");
+        }
+    }
 
 }

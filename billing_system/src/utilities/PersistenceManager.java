@@ -6,26 +6,31 @@ public class PersistenceManager implements Serializable{
 
     private static final String NOMBRE_DEL_ARCHIVO = "datos_sistema.dat";
 
-    public static void loadSystem(BillingSystem billingSystem){
-        File archivo = new File(NOMBRE_DEL_ARCHIVO);
+    public static BillingSystem loadSystem(){
 
-        // IMPRIMIR LA RUTA EXACTA (Para que sepas dónde buscarlo)
-        System.out.println("💾 Intentando guardar en: " + archivo.getAbsolutePath());
+        File file = new File(NOMBRE_DEL_ARCHIVO);
 
-        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(archivo))) {
-
-            oos.writeObject(billingSystem);
-            System.out.println("✅ ¡ÉXITO! Archivo creado/actualizado correctamente.");
-
-        } catch (NotSerializableException e) {
-            // ESTE ES EL ERROR MÁS COMÚN
-            System.out.println("❌ ERROR CRÍTICO: Falta 'implements Serializable' en alguna clase.");
-            System.out.println("Clase culpable: " + e.getMessage());
-
-        } catch (IOException e) {
-            System.out.println("❌ Error de escritura: " + e.getMessage());
-            e.printStackTrace(); // Imprime el error completo
+        if(!file.exists()){
+            System.out.println("No se encontro archivo de datos");
+            System.out.println("Iniciando un sistema nuevo (contadores en 1)");
+            return new BillingSystem();
         }
+
+        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(file))){
+
+            BillingSystem systemRecovery = (BillingSystem) ois.readObject();
+
+            System.out.println("Datos cargados correctamente");
+            System.out.println("Archivo leido desde " + file.getName());
+
+            return systemRecovery;
+
+        } catch (Exception e){
+            System.out.println("Error critico al cargar los datos: " + e.getMessage());
+            e.printStackTrace();
+            return new BillingSystem();
+        }
+
     }
 
     public static void saveSystem(BillingSystem system){

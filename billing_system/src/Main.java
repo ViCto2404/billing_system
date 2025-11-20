@@ -7,8 +7,7 @@ import utilities.PersistenceManager;
 public class Main{
     public static void main(String[] args){
 
-            BillingSystem system = new BillingSystem();
-            PersistenceManager.loadSystem(system);
+            BillingSystem system = PersistenceManager.loadSystem();
             boolean bucle = true;
             String user_action;
             Scanner sc = new Scanner(System.in);
@@ -42,11 +41,12 @@ public class Main{
 
                             switch (user_action) {
                                 case "1":
-                                    system.agregarCliente();
+                                    system.addClient();
+                                    system.showCustomerCatalog();
                                     bucle = false;
                                     break;
                                 case "2":
-                                    //Aqui va el codigo para añadir un producto
+                                    system.addProduct();
                                     bucle = false;
                                     break;
                                 case "3":
@@ -168,6 +168,7 @@ public class Main{
                             }}
                         break;
                     case "5":
+                        PersistenceManager.saveSystem(system);
                         System.out.println("Gracias por utilizar nuestros servicios");
                         System.exit(0);
                         break;
