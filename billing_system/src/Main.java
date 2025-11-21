@@ -75,15 +75,15 @@ public class Main{
 
                             switch (user_action) {
                                 case "1":
-                                    //Aqui va el codigo para remover un cliente
+                                    system.removeCustomer();
                                     bucle = false;
                                     break;
                                 case "2":
-                                    //Aqui va el codigo para remover un producto
+                                    system.removeProduct();
                                     bucle = false;
                                     break;
                                 case "3":
-                                    //Aqui va el codigo para remover una factura
+                                    system.removeInvoice();
                                     bucle = false;
                                     break;
                                 case "4":
@@ -109,15 +109,15 @@ public class Main{
 
                             switch (user_action) {
                                 case "1":
-                                    //Aqui va el codigo para buscar cliente por id
+                                    system.searchForCustomerById();
                                     bucle = false;
                                     break;
                                 case "2":
-                                    //Aqui va el codigo para buscar producto por id
+                                    system.searchForProductById();
                                     bucle = false;
                                     break;
                                 case "3":
-                                    //Aqui va el codigo para buscar factura por id
+                                    system.searchForInvoiceById();
                                     bucle = false;
                                     break;
                                 case "4":
@@ -175,9 +175,7 @@ public class Main{
                         System.out.println("Favor elegir una opcion permitida por el sistema");
                         break;
                 }
-
             bucle = true;
-
             }
         }
     }

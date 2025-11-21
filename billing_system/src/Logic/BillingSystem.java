@@ -72,6 +72,17 @@ public class BillingSystem implements Serializable{
         }
     }
 
+    private void showInvoicesCatalog(){
+        System.out.println("------Facturas disponibles------");
+        System.out.println("  ID  "+ "   Cliente         " + " Total ");
+        System.out.println("----------------------------------------------");
+
+        for(Invoice f: invoices){
+            System.out.println("  " + f.getId() + "  " + f.getClient().getName() + "          " + f.getTotal());
+        }
+        System.out.println("----------------------------------------------");
+    }
+
     public void addInvoice(){
         System.out.println("*********************************************************************");
 
@@ -169,7 +180,7 @@ public class BillingSystem implements Serializable{
 
         String id = Console.readString("Ingrese el ID del cliente que quiere eliminar: ");
 
-        if (clients.containsKey(id)){
+        if (!clients.containsKey(id)){
             System.out.println("El Id que añadiste no existe");
             return;
         }
@@ -187,6 +198,179 @@ public class BillingSystem implements Serializable{
             System.out.println("Razon: este cliente tiene facturas registradas, primero debes eliminar facturas" +
                     " asociadas");
             return;
+        }
+
+        String confirmation = Console.readString("Seguro que deseas eliminar el cliente permanentemente, " +
+                "escribe s para si o cualquier otra letra para no ");
+
+        if(confirmation.equals("s")){
+            clients.remove(id);
+            System.out.println("Cliente elminado exitosamente");
+        }else {
+            System.out.println("Operacion cancelada");
+        }
+    }
+
+    public void removeProduct(){
+        System.out.println("*******************************************************************");
+        System.out.println("------Remover productos disponibles------");
+        showProductCatalog();
+
+        String id = Console.readString("Ingresa el ID del producto que quieres eliminar: ");
+
+        if (!products.containsKey(id)){
+            System.out.println("Error: El producto con el ID: " + id + " no existe");
+            return;
+        }
+
+        boolean inUse = false;
+        for (Invoice i: invoices){
+            for(ItemInvoice item: i.getItems()){
+                if(item.getProduct().getId().equals(id)){
+                    inUse = true;
+                    break;
+                }
+            }
+            if (inUse) break;
+        }
+        if(inUse){
+            System.out.println("Accion denegada: No se puede eliminar el cliente " + id);
+            System.out.println("Razon: Este producto apararece en facturas historicas");
+            return;
+        }
+
+        String confirmation = Console.readString("Seguro que deseas eliminar el cliente permanentemente, " +
+                "escribe s para si o cualquier otra letra para no ");
+        if(confirmation.equals("s")){
+            products.remove(id);
+            System.out.println("Producto eliminado exitosamente");
+        }else {
+            System.out.println("Operacion cancelada");
+        }
+    }
+
+    public void removeInvoice(){
+        System.out.println("*********************************************************************");
+        System.out.println("------Remover facturas disponibles------");
+
+        if(invoices.isEmpty()){
+           System.out.println("No hay facturas registradas");
+           return;
+        }
+
+        showInvoicesCatalog();
+
+        String id = Console.readString("Ingrese el ID de la factura que quieres eliminar: ");
+
+        Invoice invoiceDelete = null;
+        for (Invoice i: invoices){
+            if(i.getId().equals(id)){
+                invoiceDelete = i;
+                break;
+            }
+        }
+
+        if(invoiceDelete == null){
+            System.out.println("Factura no encontrada");
+            return;
+        }
+
+        String confirmation = Console.readString("Seguro que deseas eliminar el cliente permanentemente, " +
+                "escribe s para si o cualquier otra letra para no ");
+
+        if (confirmation.equals("s")){
+            invoices.remove(invoiceDelete);
+            System.out.println("Factura eliminada exitosamente");
+        }else{
+            System.out.println("Operacion cancelada");
+        }
+    }
+
+//----------------------------METODOS DE BUSQUEDA DE REGISTROS ---------------------------------------------------------
+
+    public void searchForCustomerById(){
+        System.out.println("*********************************************************************");
+        System.out.println("------Buscar Cliente mediante ID------");
+        showCustomerCatalog();
+
+        String id = Console.readString("Ingresa el ID del producto que deseas buscar: ");
+
+        Client client = clients.get(id);
+
+        if(client != null){
+            System.out.println("Cliente buscado exitosamente");
+            System.out.println("----------------------------------------------");
+            System.out.println("ID:        " + client.getId());
+            System.out.println("Nombre:    " + client.getName());
+            System.out.println("Direccion: "+ client.getAdress());
+            System.out.println("Email:     "+ client.getEmail());
+            System.out.println("----------------------------------------------");
+        }else{
+            System.out.println("No existe ningun cliente asociado al ID: "+ id);
+        }
+    }
+
+    public void searchForProductById(){
+        System.out.println("*********************************************************************");
+        System.out.println("------Buscar Producto mediante ID------");
+        showProductCatalog();
+
+        String id = Console.readString("Ingresa el ID del producto que deseas buscar: ");
+
+        Product product = products.get(id);
+
+        if(product != null){
+            System.out.println("Producto encontrado");
+            System.out.println("----------------------------------------------");
+            System.out.println("ID:         " + product.getId());
+            System.out.println("Nombre:     " + product.getName());
+            System.out.println("Descripcion "+ product.getDescription());
+            System.out.println("Precio:     " + product.getPrice());
+            System.out.println("Stock       " + product.getStock());
+            System.out.println("----------------------------------------------");
+        }else{
+            System.out.println("No existe ningun producto asociado al ID: "+ id);
+        }
+    }
+
+    public void searchForInvoiceById(){
+        System.out.println("*********************************************************************");
+        System.out.println("------Buscar Factura mediante ID------");
+        showInvoicesCatalog();
+
+        String id = Console.readString("Ingresa el ID de la factura que deseas buscar: ");
+
+        Invoice invoiceFound = null;
+
+        for (Invoice f: invoices){
+            if(f.getId().equals(id)){
+                invoiceFound = f;
+                break;
+            }
+        }
+
+        if(invoiceFound != null){
+            System.out.println("Factura mediante encontrado exitosamente");
+            System.out.println("\n========================================");
+            System.out.println("          DETALLE DE FACTURA            ");
+            System.out.println("========================================");
+            System.out.println("N de Factura:        " + invoiceFound.getId());
+            System.out.println("Fecha:               " + invoiceFound.getFecha());
+            System.out.println("Cliente:             " + invoiceFound.getClient().getName());
+            System.out.println("----------------------------------------");
+
+            int count = 1;
+
+            System.out.println("# " + "Nombre       "+ "Cantidad  "+ "Subtotal ");
+            for(ItemInvoice i: invoiceFound.getItems()){
+                System.out.println(count + " "+ i.getProduct().getName() + " " + i.getQuantity() + "        " + i.getSubtotal());
+                count++;
+            }
+            System.out.println("----------------------------------------");
+            System.out.println("Total a pagar:                     "+invoiceFound.getTotal());
+            System.out.println("========================================");
+        }else {
+            System.out.println("No existe ningun factura asociado al ID: "+ id);
         }
     }
 
