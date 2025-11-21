@@ -19,6 +19,8 @@ public class BillingSystem implements Serializable{
     private int productsCounter = 1;
     private int invoicesCounter = 1;
 
+//----------------------------METODOS DE ADICION DE REGISTROS ---------------------------------------------------------
+
     public void addClient(){
         System.out.println("*********************************************************************");
         String id = "CLI-" +customerCounter;
@@ -54,11 +56,137 @@ public class BillingSystem implements Serializable{
         System.out.println("Producto agregado exitosamente");
     }
 
-    public void showCustomerCatalog(){
+    private void showCustomerCatalog(){
         System.out.println("------Clientes disponibles------");
         System.out.println("  ID  "+ "     NOMBRE ");
         for(Client c: clients.values()){
             System.out.println("  " + c.getId() + "   " + c.getName() + " ");
+        }
+    }
+
+    private void showProductCatalog(){
+        System.out.println("------Clientes disponibles------");
+        System.out.println("  ID  "+ "     NOMBRE ");
+        for(Product p: products.values()){
+            System.out.println("  " + p.getId() + "   " + p.getName() + " ");
+        }
+    }
+
+    public void addInvoice(){
+        System.out.println("*********************************************************************");
+
+        if(clients.isEmpty() || products.isEmpty()){
+            System.out.println("Necesitas tener clientes y productos para proceder con la creacion de las facturas");
+            return;
+        }
+
+        String idFactura = "INV-" + invoicesCounter;
+        invoicesCounter++;
+
+        System.out.println(">> ID de factura generado " + idFactura);
+
+        String date = Console.readString("Fecha de la factura: ");
+
+        showCustomerCatalog();
+
+        String idCliente = Console.readString("Ingresa el ID del cliente: ");
+
+        Client clientReal = clients.get(idCliente);
+
+        if (clientReal == null){
+            System.out.println("Cliente no encontrado, operacion cancelada");
+            invoicesCounter--;
+        }
+
+        System.out.println(">> Facturado a: "+ clientReal.getName());
+
+        Invoice newInvoice = new Invoice(idFactura, date, clientReal);
+
+        boolean selling = true;
+        while (selling){
+
+            showProductCatalog();
+
+            String idProd = Console.readString("Ingresa el ID del producto que deseas agregar: ");
+            Product prodReal = products.get(idProd);
+
+            if(prodReal != null){
+                if(prodReal.getStock() <= 0){
+                    System.out.println("El producto " + prodReal.getName() + "se encuentra agotado");
+                }else {
+                    int cantidad = Console.readInt("Cantidad a llevar (Max " + prodReal.getStock() + "): ");
+
+                    if(cantidad > 0 && cantidad <= prodReal.getStock()){
+                        ItemInvoice item = new ItemInvoice(prodReal, cantidad, prodReal.getPrice());
+                        newInvoice.agregarItem(item);
+                        prodReal.setStock(prodReal.getStock() - cantidad);
+
+                        System.out.println("Agregado a la factura. subtotal acumulado " + newInvoice.getTotal());
+                    }else {
+                        System.out.println("Cantidad invalida");
+                    }
+                }
+            }else {
+                System.out.println("Producto no encontrado");
+            }
+
+            String response = Console.readString("Ingresa n si deseas no agregar otro producto y cualquier otra letra" +
+                    "si deseas agregar mas productos: ");
+            if (response.equals("n")){
+                selling = false;
+            }
+        }
+
+        if(!newInvoice.getItems().isEmpty()){
+            invoices.add(newInvoice);
+            System.out.println("Factura terminada exitosamente. Total: $"+ newInvoice.getTotal());
+        }else{
+            System.out.println("Factura vacia, se ha cancelado");
+            invoicesCounter--;
+        }
+
+    }
+
+    public HashMap<String, Client> getClients() {
+        return clients;
+    }
+
+    public HashMap<String, Product> getProducts() {
+        return products;
+    }
+
+    public ArrayList<Invoice> getInvoices() {
+        return invoices;
+    }
+
+//----------------------------METODOS DE REMOCION DE REGISTROS ---------------------------------------------------------
+
+    public void removeCustomer()
+    {
+        System.out.println("*********************************************************************");
+        System.out.println("------Remover clientes disponibles------");
+        showCustomerCatalog();
+
+        String id = Console.readString("Ingrese el ID del cliente que quiere eliminar: ");
+
+        if (clients.containsKey(id)){
+            System.out.println("El Id que añadiste no existe");
+            return;
+        }
+
+        boolean hasInvoices = false;
+        for (Invoice f: invoices){
+            if (f.getId().equals(id)){
+                hasInvoices = true;
+                break;
+            }
+        }
+
+        if(hasInvoices){
+            System.out.println("Accion denegada, no se puede eliminar el cliente " + id);
+            System.out.println("Razon: este cliente tiene facturas registradas, primero debes eliminar facturas" +
+                    " asociadas");
+            return;
         }
     }
 

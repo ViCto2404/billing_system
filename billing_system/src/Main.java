@@ -33,7 +33,7 @@ public class Main{
                             System.out.println("MENU DE ADICION DE REGISTROS: Ingrese el numero de la opcion a la que desea acceder");
                             System.out.println("1. Añadir cliente");
                             System.out.println("2. Añadir producto");
-                            System.out.println("3. Buscar factura");
+                            System.out.println("3. Añadir factura");
                             System.out.println("4. volver atras");
                             System.out.println("*********************************************************************");
                             System.out.print("Ingrese la opcion deseada: ");
@@ -42,7 +42,6 @@ public class Main{
                             switch (user_action) {
                                 case "1":
                                     system.addClient();
-                                    system.showCustomerCatalog();
                                     bucle = false;
                                     break;
                                 case "2":
@@ -50,7 +49,7 @@ public class Main{
                                     bucle = false;
                                     break;
                                 case "3":
-                                    //Aqui va el codigo para añadir una factura
+                                    system.addInvoice();
                                     bucle = false;
                                     break;
                                 case "4":

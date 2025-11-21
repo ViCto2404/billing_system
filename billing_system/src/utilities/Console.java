@@ -8,7 +8,7 @@ public class Console {
     private static final Scanner sc = new Scanner(System.in);
 
     public static String readString(String message){
-        System.out.println(message);
+        System.out.print(message);
         return sc.nextLine();
     }
 
