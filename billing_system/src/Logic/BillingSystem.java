@@ -8,19 +8,32 @@ import Models.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+/**
+ * Sistema principal de facturación.
+ * Contiene colecciones de clientes, productos y facturas,
+ * además de métodos para agregar, eliminar, buscar e imprimir registros.
+ */
 public class BillingSystem implements Serializable{
 
     //Scanner entry = new Scanner(System.in);
+
+    // Mapa de clientes: clave = ID del cliente, valor = objeto Client
     private HashMap<String, Client> clients = new HashMap<>();
+    // Mapa de productos: clave = ID del producto, valor = objeto Product
     private HashMap<String, Product> products = new HashMap<>();
+    // Lista de facturas
     private ArrayList<Invoice> invoices = new ArrayList<>();
 
+    // Contadores para generar IDs automáticos
     private int customerCounter = 1;
     private int productsCounter = 1;
     private int invoicesCounter = 1;
 
 //----------------------------METODOS DE ADICION DE REGISTROS ---------------------------------------------------------
 
+    /**
+     * Solicita datos por consola y crea un nuevo cliente con ID autogenerado.
+     */
     public void addClient(){
         System.out.println("*********************************************************************");
         String id = "CLI-" +customerCounter;
@@ -38,6 +51,9 @@ public class BillingSystem implements Serializable{
         System.out.println("*********************************************************************");
     }
 
+    /**
+     * Solicita datos por consola y crea un nuevo producto con ID autogenerado.
+     */
     public void addProduct(){
         System.out.println("*********************************************************************");
         String id = "PRO-" +productsCounter;
@@ -56,6 +72,9 @@ public class BillingSystem implements Serializable{
         System.out.println("Producto agregado exitosamente");
     }
 
+    /**
+     * Muestra un listado simple de clientes con su ID y nombre.
+     */
     private void showCustomerCatalog(){
         System.out.println("------Clientes disponibles------");
         System.out.println("  ID  "+ "     NOMBRE ");
@@ -64,6 +83,9 @@ public class BillingSystem implements Serializable{
         }
     }
 
+    /**
+     * Muestra un listado simple de productos con su ID y nombre.
+     */
     private void showProductCatalog(){
         System.out.println("------Clientes disponibles------");
         System.out.println("  ID  "+ "     NOMBRE ");
@@ -72,6 +94,9 @@ public class BillingSystem implements Serializable{
         }
     }
 
+    /**
+     * Muestra un listado simple de facturas con ID, cliente y total.
+     */
     private void showInvoicesCatalog(){
         System.out.println("------Facturas disponibles------");
         System.out.println("  ID  "+ "   Cliente         " + " Total ");
@@ -83,6 +108,10 @@ public class BillingSystem implements Serializable{
         System.out.println("----------------------------------------------");
     }
 
+    /**
+     * Crea una factura: selecciona cliente, agrega items y actualiza stock.
+     * Valida existencia de clientes/productos y evita facturas vacías.
+     */
     public void addInvoice(){
         System.out.println("*********************************************************************");
 
@@ -96,7 +125,7 @@ public class BillingSystem implements Serializable{
 
         System.out.println(">> ID de factura generado " + idFactura);
 
-        String date = Console.readString("Fecha de la factura: ");
+        String date = Console.readString("Fecha de la factura (dd/mm/aa): ");
 
         showCustomerCatalog();
 
@@ -158,6 +187,7 @@ public class BillingSystem implements Serializable{
 
     }
 
+    // Getters para acceder a las colecciones desde otras clases (si es necesario)
     public HashMap<String, Client> getClients() {
         return clients;
     }
@@ -172,6 +202,10 @@ public class BillingSystem implements Serializable{
 
 //----------------------------METODOS DE REMOCION DE REGISTROS ---------------------------------------------------------
 
+    /**
+     * Elimina un cliente si no tiene facturas asociadas.
+     * Pide confirmación antes de eliminar.
+     */
     public void removeCustomer()
     {
         System.out.println("*********************************************************************");
@@ -211,6 +245,10 @@ public class BillingSystem implements Serializable{
         }
     }
 
+    /**
+     * Elimina un producto si no aparece en ninguna factura histórica.
+     * Pide confirmación antes de eliminar.
+     */
     public void removeProduct(){
         System.out.println("*******************************************************************");
         System.out.println("------Remover productos disponibles------");
@@ -249,6 +287,9 @@ public class BillingSystem implements Serializable{
         }
     }
 
+    /**
+     * Elimina una factura por ID tras pedir confirmación.
+     */
     public void removeInvoice(){
         System.out.println("*********************************************************************");
         System.out.println("------Remover facturas disponibles------");
@@ -286,8 +327,11 @@ public class BillingSystem implements Serializable{
         }
     }
 
-//----------------------------METODOS DE BUSQUEDA DE REGISTROS ---------------------------------------------------------
+    //----------------------------METODOS DE BUSQUEDA DE REGISTROS ---------------------------------------------------------
 
+    /**
+     * Busca y muestra un cliente por su ID.
+     */
     public void searchForCustomerById(){
         System.out.println("*********************************************************************");
         System.out.println("------Buscar Cliente mediante ID------");
@@ -310,6 +354,9 @@ public class BillingSystem implements Serializable{
         }
     }
 
+    /**
+     * Busca y muestra un producto por su ID.
+     */
     public void searchForProductById(){
         System.out.println("*********************************************************************");
         System.out.println("------Buscar Producto mediante ID------");
@@ -333,6 +380,9 @@ public class BillingSystem implements Serializable{
         }
     }
 
+    /**
+     * Busca y muestra una factura por su ID con detalle de items y totales.
+     */
     public void searchForInvoiceById(){
         System.out.println("*********************************************************************");
         System.out.println("------Buscar Factura mediante ID------");
@@ -363,7 +413,7 @@ public class BillingSystem implements Serializable{
 
             System.out.println("# " + "Nombre       "+ "Cantidad  "+ "Subtotal ");
             for(ItemInvoice i: invoiceFound.getItems()){
-                System.out.println(count + " "+ i.getProduct().getName() + " " + i.getQuantity() + "        " + i.getSubtotal());
+                System.out.println(count + " "+ i.getProduct().getName() + "       " + i.getQuantity() + "         " + i.getSubtotal());
                 count++;
             }
             System.out.println("----------------------------------------");
@@ -371,6 +421,63 @@ public class BillingSystem implements Serializable{
             System.out.println("========================================");
         }else {
             System.out.println("No existe ningun factura asociado al ID: "+ id);
+        }
+    }
+
+    //  ===================  IMPRIMIR ORDENADO POR ID ==============================
+
+    /**
+     * Imprime todos los clientes ordenados por su ID (alfabéticamente).
+     */
+    public void printClientsOrderedById() {
+        System.out.println("----- CLIENTES ORDENADOS POR ID -----");
+
+        ArrayList<Client> lista = new ArrayList<>(clients.values());
+        lista.sort((c1, c2) -> c1.getId().compareTo(c2.getId()));
+
+        for (Client c : lista) {
+            System.out.println("ID: " + c.getId());
+            System.out.println("Nombre: " + c.getName());
+            System.out.println("Dirección: " + c.getAdress());
+            System.out.println("Email: " + c.getEmail());
+            System.out.println("------------------------------");
+        }
+    }
+
+    /**
+     * Imprime todos los productos ordenados por su ID.
+     */
+    public void printProductsOrderedById() {
+        System.out.println("----- PRODUCTOS ORDENADOS POR ID -----");
+
+        ArrayList<Product> lista = new ArrayList<>(products.values());
+        lista.sort((p1, p2) -> p1.getId().compareTo(p2.getId()));
+
+        for (Product p : lista) {
+            System.out.println("ID: " + p.getId());
+            System.out.println("Nombre: " + p.getName());
+            System.out.println("Descripción: " + p.getDescription());
+            System.out.println("Precio: " + p.getPrice());
+            System.out.println("Stock: " + p.getStock());
+            System.out.println("------------------------------");
+        }
+    }
+
+    /**
+     * Imprime todas las facturas ordenadas por su ID.
+     */
+    public void printInvoicesOrderedById() {
+        System.out.println("----- FACTURAS ORDENADAS POR ID -----");
+
+        ArrayList<Invoice> lista = new ArrayList<>(invoices);
+        lista.sort((f1, f2) -> f1.getId().compareTo(f2.getId()));
+
+        for (Invoice f : lista) {
+            System.out.println("ID Factura: " + f.getId());
+            System.out.println("Fecha: " + f.getFecha());
+            System.out.println("Cliente: " + f.getClient().getName());
+            System.out.println("Total: $" + f.getTotal());
+            System.out.println("------------------------------");
         }
     }
 

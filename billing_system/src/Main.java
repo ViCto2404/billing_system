@@ -3,17 +3,27 @@ import java.util.Scanner;
 import Logic.BillingSystem;
 import utilities.PersistenceManager;
 
-
+/**
+ * Clase principal de la aplicación.
+ * - Carga el estado del sistema desde persistencia.
+ * - Muestra menús por consola y delega las operaciones al BillingSystem.
+ */
 public class Main{
     public static void main(String[] args){
 
+            // Cargar o crear el sistema de facturación
             BillingSystem system = PersistenceManager.loadSystem();
+            // Variable de control para los bucles de menú
             boolean bucle = true;
+            // Almacena la opción ingresada por el usuario
             String user_action;
+            // Scanner para leer la entrada por consola
             Scanner sc = new Scanner(System.in);
 
+            // Bucle principal del menú
             while(bucle){
 
+                // Menú principal mostrado al usuario
                 System.out.println("billing system v0.1");
                 System.out.println("*********************************************************************");
                 System.out.println("MENU PRINCIPAL: Ingrese el numero de la opcion a la que desea acceder");
@@ -27,8 +37,10 @@ public class Main{
                 System.out.print("Ingrese la opcion deseada: ");
                 user_action = sc.nextLine();
 
+                // Procesar la opción del menú principal
                 switch (user_action) {
                     case "1":
+                        // Submenú: añadir registros
                         while(bucle){
                             System.out.println("*********************************************************************");
                             System.out.println("MENU DE ADICION DE REGISTROS: Ingrese el numero de la opcion a la que desea acceder");
@@ -40,29 +52,37 @@ public class Main{
                             System.out.print("Ingrese la opcion deseada: ");
                             user_action = sc.nextLine();
 
+                            // Opciones del submenú de adición
                             switch (user_action) {
                                 case "1":
+                                    // Llama al método que agrega un cliente
                                     system.addClient();
+                                    // Salir del submenú para volver al principal
                                     bucle = false;
                                     break;
                                 case "2":
+                                    // Llama al método que agrega un producto
                                     system.addProduct();
                                     bucle = false;
                                     break;
                                 case "3":
+                                    // Llama al método que crea una factura
                                     system.addInvoice();
                                     bucle = false;
                                     break;
                                 case "4":
+                                    // Volver al menú principal sin acción
                                     bucle = false;
                                     break;
                                 default:
+                                    // Opción no válida en el submenú
                                     System.out.println("Favor elegir una opcion permitida por el sistema");
                                     break;
                             }}
                         break;
 
                     case "2":
+                        // Submenú: remover registros
                         while(bucle){
                             System.out.println("*********************************************************************");
                             System.out.println("MENU DE SUSTRACCION DE REGISTROS: Ingrese el numero de la opcion a la que desea acceder");
@@ -74,20 +94,25 @@ public class Main{
                             System.out.print("Ingrese la opcion deseada: ");
                             user_action = sc.nextLine();
 
+                            // Opciones del submenú de remoción
                             switch (user_action) {
                                 case "1":
+                                    // Elimina cliente (si es posible)
                                     system.removeCustomer();
                                     bucle = false;
                                     break;
                                 case "2":
+                                    // Elimina producto (si es posible)
                                     system.removeProduct();
                                     bucle = false;
                                     break;
                                 case "3":
+                                    // Elimina factura seleccionada
                                     system.removeInvoice();
                                     bucle = false;
                                     break;
                                 case "4":
+                                    // Volver al menú principal
                                     bucle = false;
                                     break;
                                 default:
@@ -97,6 +122,7 @@ public class Main{
                         break;
 
                     case "3":
+                        // Submenú: buscar registros por ID
                         while(bucle){
                             System.out.println("*********************************************************************");
                             System.out.println("MENU DE BUSQUEDA DE REGISTROS: Ingrese el numero de la opcion a la que desea acceder");
@@ -108,20 +134,25 @@ public class Main{
                             System.out.print("Ingrese la opcion deseada: ");
                             user_action = sc.nextLine();
 
+                            // Opciones del submenú de búsqueda
                             switch (user_action) {
                                 case "1":
+                                    // Busca y muestra cliente por ID
                                     system.searchForCustomerById();
                                     bucle = false;
                                     break;
                                 case "2":
+                                    // Busca y muestra producto por ID
                                     system.searchForProductById();
                                     bucle = false;
                                     break;
                                 case "3":
+                                    // Busca y muestra factura por ID
                                     system.searchForInvoiceById();
                                     bucle = false;
                                     break;
                                 case "4":
+                                    // Volver al menú principal
                                     bucle = false;
                                     break;
                                 default:
@@ -130,6 +161,7 @@ public class Main{
                             }}
                         break;
                     case "4":
+                        // Submenú: modificar registros (placeholders actualmente)
                         while(bucle){
                             System.out.println("*********************************************************************");
                             System.out.println("MENU DE MODIFICACION: Ingrese el numero de la opcion a la que desea acceder");
@@ -141,21 +173,21 @@ public class Main{
                             System.out.print("Ingrese la opcion deseada: ");
                             user_action = sc.nextLine();
 
+                            // Opciones del submenú de modificación
                             switch (user_action) {
                                 case "1":
-                                    //Aqui va el codigo para imprimir facturas ordenadas
+                                    // Lugar para implementar modificación de cliente
                                     bucle = false;
                                     break;
                                 case "2":
-                                    //Aqui va el codigo para imprimir clientes ordenadas
+                                    // Lugar para implementar modificación de producto
                                     bucle = false;
                                     break;
                                 case "3":
-                                    //Aqui va el codigo para imprimir productos ordenados
+                                    // Lugar para implementar modificación de factura
                                     bucle = false;
                                     break;
                                 case "4":
-                                    //Aqui va el codigo para imprimir los logs
                                     bucle = false;
                                     break;
                                 default:
@@ -164,6 +196,7 @@ public class Main{
                             }}
                         break;
                     case "5":
+                        // Submenú: impresión / reportes
                         while(bucle){
                             System.out.println("*********************************************************************");
                             System.out.println("MENU DE IMPRESION: Ingrese el numero de la opcion a la que desea acceder");
@@ -176,24 +209,29 @@ public class Main{
                             System.out.print("Ingrese la opcion deseada: ");
                             user_action = sc.nextLine();
 
+                            // Opciones del submenú de impresión
                             switch (user_action) {
                                 case "1":
-                                    //Aqui va el codigo para imprimir facturas ordenadas
+                                    // Muestra facturas ordenadas por ID
+                                    system.printInvoicesOrderedById();
                                     bucle = false;
                                     break;
                                 case "2":
-                                    //Aqui va el codigo para imprimir clientes ordenadas
+                                    // Muestra clientes ordenados por ID
+                                    system.printClientsOrderedById();
                                     bucle = false;
                                     break;
                                 case "3":
-                                    //Aqui va el codigo para imprimir productos ordenados
+                                    // Muestra productos ordenados por ID
+                                    system.printProductsOrderedById();
                                     bucle = false;
                                     break;
                                 case "4":
-                                    //Aqui va el codigo para imprimir los logs
+                                    // Lugar para imprimir logs
                                     bucle = false;
                                     break;
                                 case "5":
+                                    // Volver al menú principal
                                     bucle = false;
                                     break;
                                 default:
@@ -202,14 +240,17 @@ public class Main{
                             }}
                         break;
                     case "6":
+                        // Guardar el estado actual y salir de la aplicación
                         PersistenceManager.saveSystem(system);
                         System.out.println("Gracias por utilizar nuestros servicios");
                         System.exit(0);
                         break;
                     default:
+                        // Opción no válida en el menú principal
                         System.out.println("Favor elegir una opcion permitida por el sistema");
                         break;
                 }
+            // Reiniciar la bandera para permitir volver a entrar en submenús desde el principal
             bucle = true;
             }
         }
