@@ -1,0 +1,5 @@
+LOG-e2025566 | 2025-11-24 15:57:10 |  Victor Sepulveda | Nuevo cliente registrado
+LOG-485192e3 | 2025-11-24 15:57:42 |  Victor Sepulveda | Nuevo producto registrado
+LOG-4ad8873d | 2025-11-24 15:57:53 |  Victor Sepulveda | reporte de logs impreso
+LOG-11d2825c | 2025-11-24 15:59:03 |  Cesar | Nuevo cliente registrado
+LOG-1c0ad446 | 2025-11-24 15:59:12 |  Cesar | reporte de logs impreso
