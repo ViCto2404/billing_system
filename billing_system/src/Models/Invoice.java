@@ -36,7 +36,7 @@ public class Invoice implements Serializable{
         this.client = client;
         this.items = new ArrayList<>(); // lista vacía para agregar ItemInvoice posteriormente
         this.total = 0.0; // total inicial
-        this.state = "Pagada"; // estado por defecto
+        this.state = "Pendiente"; // estado por defecto
     }
 
     /**

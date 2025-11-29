@@ -1,6 +1,8 @@
 package Logic;
 import java.io.Serializable;
 import utilities.Console;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 //objets
 import Models.*;
@@ -125,7 +127,11 @@ public class BillingSystem implements Serializable{
 
         System.out.println(">> ID de factura generado " + idFactura);
 
-        String date = Console.readString("Fecha de la factura (dd/mm/aa): ");
+        LocalDateTime actualDate = LocalDateTime.now();
+
+        DateTimeFormatter format = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+
+        String date = actualDate.format(format);
 
         showCustomerCatalog();
 
@@ -475,10 +481,113 @@ public class BillingSystem implements Serializable{
         for (Invoice f : lista) {
             System.out.println("ID Factura: " + f.getId());
             System.out.println("Fecha: " + f.getFecha());
+            System.out.println("Estatus de la factura: " + f.getState());
             System.out.println("Cliente: " + f.getClient().getName());
             System.out.println("Total: $" + f.getTotal());
             System.out.println("------------------------------");
         }
+    }
+
+    //  ===================  MODIFICACION DE REGISTROS ==============================
+
+    public void modifyCustomer(){
+        System.out.println("----- MODIFICAR CLIENTE -----");
+        showCustomerCatalog();
+
+        String id = Console.readString("Ingresa el ID del cliente que deseas editar: ");
+
+        Client c = clients.get(id);
+
+        if(c == null){
+            System.out.println("No existe ningun cliente asociado al ID: "+ id);
+            return;
+        }
+
+        System.out.println(">> Editando datos de: "+ c.getName());
+        System.out.println("Ingrese los datos nuevos");
+
+        String newName = Console.readString("Ingrese el nuevo nombre del cliente (actual: " + c.getName() + "): ");
+        String newAdress = Console.readString("Ingrese la nueva direccion del cliente (actual: "+ c.getAdress()+"): ");
+        String newMail = Console.readString("Ingrese el nuevo mail del cliente (actual: "+ c.getEmail()+ "): ");
+
+        c.setName(newName);
+        c.setAdress(newAdress);
+        c.setEmail(newMail);
+
+        System.out.println("Datos actualizados correctamente");
+
+    }
+
+    public void modifyProduct(){
+        System.out.println("----- MODIFICAR PRODUCTO -----");
+        showProductCatalog();
+
+        String id = Console.readString("Ingresa el ID del producto que deseas editar: ");
+
+        Product p = products.get(id);
+
+        if(p == null){
+            System.out.println("No existe ningun producto asociado al ID: "+ id);
+            return;
+        }
+
+        System.out.println(">> Editando datos de: "+ p.getName());
+        System.out.println("Ingrese los datos nuevos");
+
+        String newName = Console.readString("Ingrese el nuevo nombre del producto (actual: " + p.getName() + "): ");
+        String newDesc = Console.readString("Ingrese la nueva descripcion del producto (actual: "+ p.getDescription()+"): ");
+        double newPrice = Console.readDouble("Ingrese el nuevo precio del producto (actual: "+ p.getPrice()+ "): ");
+        int newStock = Console.readInt("Ingrese el nuevo stock del producto (actual: "+ p.getStock()+ "): ");
+
+        p.setName(newName);
+        p.setDescription(newDesc);
+        p.setPrice(newPrice);
+        p.setStock(newStock);
+
+        System.out.println("Datos actualizados correctamente");
+
+    }
+
+    public void modifyInvoice(){
+        System.out.println("----- MODIFICAR FACTURA -----");
+        showInvoicesCatalog();
+
+        String id = Console.readString("Ingresa el ID de la factura que deseas editar: ");
+
+        Invoice invoiceToEdit = null;
+
+        for(Invoice i : invoices){
+            if(i.getId().equals(id)){
+                invoiceToEdit = i;
+                break;
+            }
+        }
+
+        if(invoiceToEdit == null){
+            System.out.println("No existe ninguna factura asociada al ID: "+ id);
+            return;
+        }
+
+        System.out.println(">> Factura: "+ invoiceToEdit.getId()+ "| Cliente: " + invoiceToEdit.getClient().getName());
+        System.out.println("El estado de la factura es " + invoiceToEdit.getState());
+
+        System.out.println("Opciones para cambio de estado: 1 - Pendiente | 2 - Pagada | 3 - Anulada");
+
+        int option = Console.readInt("Ingresa la opcion que quieras realizar: ");
+
+        String newState = "Pendiente";
+
+        switch(option){
+            case 1: newState = "Pendiente"; break;
+            case 2: newState = "Pagada"; break;
+            case 3: newState = "Anulada"; break;
+            default: System.out.println("Ingrese una opcion valida"); return;
+        }
+
+        invoiceToEdit.setState(newState);
+
+        System.out.println("Datos actualizados correctamente");
+
     }
 
 }

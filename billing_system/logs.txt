@@ -3,3 +3,26 @@ LOG-485192e3 | 2025-11-24 15:57:42 |  Victor Sepulveda | Nuevo producto registra
 LOG-4ad8873d | 2025-11-24 15:57:53 |  Victor Sepulveda | reporte de logs impreso
 LOG-11d2825c | 2025-11-24 15:59:03 |  Cesar | Nuevo cliente registrado
 LOG-1c0ad446 | 2025-11-24 15:59:12 |  Cesar | reporte de logs impreso
+LOG-bc60c961 | 2025-11-26 17:03:32 |  Victor | Nuevo cliente registrado
+LOG-4985f113 | 2025-11-26 17:03:45 |  Victor | Nuevo producto registrado
+LOG-63c17de5 | 2025-11-26 17:04:48 |  Victor | Nueva factura registrada
+LOG-b8a5d27a | 2025-11-26 17:04:59 |  Victor | reporte de logs impreso
+LOG-e84b6a27 | 2025-11-26 17:07:47 |  Victor | Sistema guardado
+LOG-19808206 | 2025-11-28 18:27:05 | Victor | Nuevo cliente registrado
+LOG-f917e006 | 2025-11-28 18:27:25 | Victor | Nuevo producto registrado
+LOG-e92d19a3 | 2025-11-28 18:28:04 | Victor | Nueva factura registrada
+LOG-0b80ea99 | 2025-11-28 18:28:45 | Victor | registro de cliente modificado
+LOG-4d7a0d90 | 2025-11-28 18:28:57 | Victor | reporte de clientes impreso
+LOG-702d48d0 | 2025-11-28 18:29:41 | Victor | registro de factura modificado
+LOG-08637a96 | 2025-11-28 18:29:52 | Victor | reporte de facturas impreso
+LOG-b0dae366 | 2025-11-28 18:30:16 | Victor | Sistema guardado
+LOG-a5b5f549 | 2025-11-28 19:05:02 | Victor | Nuevo cliente registrado
+LOG-77869534 | 2025-11-28 19:05:14 | Victor | Nuevo producto registrado
+LOG-0254bcf4 | 2025-11-28 19:05:55 | Victor | Nueva factura registrada
+LOG-907e8cd3 | 2025-11-28 19:07:15 | Victor | reporte de clientes impreso
+LOG-53e26c4a | 2025-11-28 19:07:37 | Victor | reporte de productos impreso
+LOG-d484d90e | 2025-11-28 19:07:52 | Victor | Sistema guardado
+LOG-d21ce00d | 2025-11-29 12:38:58 | Victor | Nueva factura registrada
+LOG-a24db723 | 2025-11-29 12:39:05 | Victor | reporte de facturas impreso
+LOG-8ac12910 | 2025-11-29 12:39:19 | Victor | reporte de logs impreso
+LOG-b3007143 | 2025-11-29 12:39:35 | Victor | Sistema guardado

@@ -20,7 +20,7 @@ public class Main{
             // Scanner para leer la entrada por consola
             Scanner sc = new Scanner(System.in);
 
-            System.out.print("Ingrese su nombre para acceder al sistema");
+            System.out.print("Ingrese su nombre para acceder al sistema: ");
             String user_name = sc.nextLine();
 
             // Bucle principal del menú
@@ -60,6 +60,8 @@ public class Main{
                                 case "1":
                                     // Llama al método que agrega un cliente
                                     system.addClient();
+                                    //guardamos sistema
+                                    PersistenceManager.saveSystem(system);
                                     //Guardamos el log de la accion
                                     utilities.log_manager.recordLog("Nuevo cliente registrado", user_name);
                                     // Salir del submenú para volver al principal
@@ -68,6 +70,8 @@ public class Main{
                                 case "2":
                                     // Llama al método que agrega un producto
                                     system.addProduct();
+                                    //guardamos sistema
+                                    PersistenceManager.saveSystem(system);
                                     //Guardamos el log de la accion
                                     utilities.log_manager.recordLog("Nuevo producto registrado", user_name);
                                     bucle = false;
@@ -75,6 +79,8 @@ public class Main{
                                 case "3":
                                     // Llama al método que crea una factura
                                     system.addInvoice();
+                                    //guardamos sistema
+                                    PersistenceManager.saveSystem(system);
                                     //Guardamos el log de la accion
                                     utilities.log_manager.recordLog("Nueva factura registrada", user_name);
                                     bucle = false;
@@ -108,6 +114,8 @@ public class Main{
                                 case "1":
                                     // Elimina cliente (si es posible)
                                     system.removeCustomer();
+                                    //guardamos sistema
+                                    PersistenceManager.saveSystem(system);
                                     //Guardamos el log de la accion
                                     utilities.log_manager.recordLog("cliente removido", user_name);
                                     bucle = false;
@@ -115,6 +123,8 @@ public class Main{
                                 case "2":
                                     // Elimina producto (si es posible)
                                     system.removeProduct();
+                                    //guardamos sistema
+                                    PersistenceManager.saveSystem(system);
                                     //Guardamos el log de la accion
                                     utilities.log_manager.recordLog("producto removido", user_name);
                                     bucle = false;
@@ -122,6 +132,8 @@ public class Main{
                                 case "3":
                                     // Elimina factura seleccionada
                                     system.removeInvoice();
+                                    //guardamos sistema
+                                    PersistenceManager.saveSystem(system);
                                     //Guardamos el log de la accion
                                     utilities.log_manager.recordLog("factura removida", user_name);
                                     bucle = false;
@@ -154,6 +166,8 @@ public class Main{
                                 case "1":
                                     // Busca y muestra cliente por ID
                                     system.searchForCustomerById();
+                                    //guardamos sistema
+                                    PersistenceManager.saveSystem(system);
                                     //Guardamos el log de la accion
                                     utilities.log_manager.recordLog("busqueda de cliente realizada", user_name);
                                     bucle = false;
@@ -161,6 +175,8 @@ public class Main{
                                 case "2":
                                     // Busca y muestra producto por ID
                                     system.searchForProductById();
+                                    //guardamos sistema
+                                    PersistenceManager.saveSystem(system);
                                     //Guardamos el log de la accion
                                     utilities.log_manager.recordLog("busqueda de producto realizada", user_name);
                                     bucle = false;
@@ -168,6 +184,8 @@ public class Main{
                                 case "3":
                                     // Busca y muestra factura por ID
                                     system.searchForInvoiceById();
+                                    //guardamos sistema
+                                    PersistenceManager.saveSystem(system);
                                     //Guardamos el log de la accion
                                     utilities.log_manager.recordLog("busqueda de factura realizada", user_name);
                                     bucle = false;
@@ -197,19 +215,28 @@ public class Main{
                             // Opciones del submenú de modificación
                             switch (user_action) {
                                 case "1":
-                                    // Lugar para implementar modificación de cliente
+                                    //modificamos cliente
+                                    system.modifyCustomer();
+                                    //guardamos sistema
+                                    PersistenceManager.saveSystem(system);
                                     //Guardamos el log de la accion
                                     utilities.log_manager.recordLog("registro de cliente modificado", user_name);
                                     bucle = false;
                                     break;
                                 case "2":
-                                    // Lugar para implementar modificación de producto
+                                    //modificamos producto
+                                    system.modifyProduct();
+                                    //guardamos el sistema
+                                    PersistenceManager.saveSystem(system);
                                     //Guardamos el log de la accion
                                     utilities.log_manager.recordLog("registro de producto modificado", user_name);
                                     bucle = false;
                                     break;
                                 case "3":
-                                    // Lugar para implementar modificación de factura
+                                    //modificamos factura
+                                    system.modifyInvoice();
+                                    //guardamos el sistema
+                                    PersistenceManager.saveSystem(system);
                                     //Guardamos el log de la accion
                                     utilities.log_manager.recordLog("registro de factura modificado", user_name);
                                     bucle = false;
@@ -241,6 +268,8 @@ public class Main{
                                 case "1":
                                     // Muestra facturas ordenadas por ID
                                     system.printInvoicesOrderedById();
+                                    //guardamos el sistema
+                                    PersistenceManager.saveSystem(system);
                                     //Guardamos el log de la accion
                                     utilities.log_manager.recordLog("reporte de facturas impreso", user_name);
                                     bucle = false;
@@ -248,6 +277,8 @@ public class Main{
                                 case "2":
                                     // Muestra clientes ordenados por ID
                                     system.printClientsOrderedById();
+                                    //guardamos el sistema
+                                    PersistenceManager.saveSystem(system);
                                     //Guardamos el log de la accion
                                     utilities.log_manager.recordLog("reporte de clientes impreso", user_name);
                                     bucle = false;
@@ -262,6 +293,8 @@ public class Main{
                                 case "4":
                                     // Lugar para imprimir logs
                                     utilities.log_manager.showLogs();
+                                    //guardamos el sistema
+                                    PersistenceManager.saveSystem(system);
                                     //Guardamos el log de la accion
                                     utilities.log_manager.recordLog("reporte de logs impreso", user_name);
                                     bucle = false;
